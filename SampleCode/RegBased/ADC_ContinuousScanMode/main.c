@@ -164,7 +164,9 @@ void AdcContScanModeTest()
         if(u8Option == '1')
         {
             /* Set the ADC operation mode as continuous scan, input mode as single-end and enable the ADC converter */
-            ADC->ADCR = (ADC_ADCR_ADMD_CONTINUOUS | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+            ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+                (ADC_ADCR_ADMD_CONTINUOUS | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+
             /* Enable analog input channel 0, 1, 2 and 3 */
             ADC->ADCHER = ((ADC->ADCHER & ~ADC_ADCHER_CHEN_Msk) | (0xF));
 
@@ -205,7 +207,9 @@ void AdcContScanModeTest()
         else if(u8Option == '2')
         {
             /* Set the ADC operation mode as continuous scan, input mode as differential and enable the ADC converter */
-            ADC->ADCR = (ADC_ADCR_ADMD_CONTINUOUS | ADC_ADCR_DIFFEN_DIFFERENTIAL | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+            ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+                (ADC_ADCR_ADMD_CONTINUOUS | ADC_ADCR_DIFFEN_DIFFERENTIAL | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+
             /* Enable analog input channel 0 and 2 */
             ADC->ADCHER = ((ADC->ADCHER & ~ADC_ADCHER_CHEN_Msk) | (0x5));
 

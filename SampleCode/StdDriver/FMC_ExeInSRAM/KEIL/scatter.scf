@@ -4,9 +4,9 @@ FLASH 0x00000000
 {
     FLASH +0
     {
-         startup_NUC126.o(RESET, +First)
-         startup_NUC126.o
-         system_NUC126.o
+         startup_NUC1261.o(RESET, +First)
+         startup_NUC1261.o
+         system_NUC1261.o
          anon$$obj.o
          init.o
          entry*.o

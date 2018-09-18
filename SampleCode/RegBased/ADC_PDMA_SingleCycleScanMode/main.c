@@ -250,7 +250,8 @@ void AdcSingleCycleScanModePDMATest()
             PDMA_ConfigReload();
 
             /* Set the ADC operation mode as single-cycle, input mode as single-end and enable the ADC converter  */
-            ADC->ADCR = (ADC_ADCR_ADMD_SINGLE_CYCLE | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+            ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+                (ADC_ADCR_ADMD_SINGLE_CYCLE | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
 
             /* Enable PDMA transfer */
             ADC_ENABLE_PDMA(ADC);
@@ -318,7 +319,8 @@ void AdcSingleCycleScanModePDMATest()
             PDMA_ConfigReload();
 
             /* Set the ADC operation mode as single-cycle, input mode as differential and enable the ADC converter */
-            ADC->ADCR = (ADC_ADCR_ADMD_SINGLE_CYCLE | ADC_ADCR_DIFFEN_DIFFERENTIAL | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+            ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+                (ADC_ADCR_ADMD_SINGLE_CYCLE | ADC_ADCR_DIFFEN_DIFFERENTIAL | ADC_ADCR_ADEN_CONVERTER_ENABLE);
 
             /* Enable PDMA transfer */
             ADC_ENABLE_PDMA(ADC);
@@ -392,7 +394,7 @@ void AdcSingleCycleScanModePDMATest()
 /*---------------------------------------------------------------------------------------------------------*/
 /* MAIN function                                                                                           */
 /*---------------------------------------------------------------------------------------------------------*/
-main(void)
+int32_t main(void)
 {
 
     /* Unlock protected registers */

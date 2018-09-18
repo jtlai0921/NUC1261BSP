@@ -126,7 +126,8 @@ void ADC_PWMTrigTest_SingleOpMode()
     printf("\n<<< PWM trigger test (Single mode) >>>\n");
 
     /* PWM trigger; ADC single operation mode; single-end input; enable the ADC converter. */
-    ADC->ADCR = (ADC_ADCR_TRGS_PWM | ADC_ADCR_TRGEN_ENABLE | ADC_ADCR_ADMD_SINGLE | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+    ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_TRGS_Msk | ADC_ADCR_TRGEN_Msk |ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+        (ADC_ADCR_TRGS_PWM | ADC_ADCR_TRGEN_ENABLE | ADC_ADCR_ADMD_SINGLE | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
     /* Enable analog input channel 2 */
     ADC->ADCHER |= ((ADC->ADCHER & ~ADC_ADCHER_CHEN_Msk) | (1 << 2));
     /* Clear the A/D interrupt flag for safe */

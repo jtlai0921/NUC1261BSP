@@ -138,7 +138,9 @@ void AdcSingleModeTest()
         if(u8Option == '1')
         {
             /* Set the ADC operation mode as single, input mode as single-end and enable the ADC converter */
-            ADC->ADCR = (ADC_ADCR_ADMD_SINGLE | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+            ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+                (ADC_ADCR_ADMD_SINGLE | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+
             /* Enable analog input channel 2 */
             ADC->ADCHER |= ((ADC->ADCHER & ~ADC_ADCHER_CHEN_Msk) | (1 << 2));
 
@@ -166,7 +168,9 @@ void AdcSingleModeTest()
         else if(u8Option == '2')
         {
             /* Set the ADC operation mode as single, input mode as differential and enable the ADC converter */
-            ADC->ADCR = (ADC_ADCR_ADMD_SINGLE | ADC_ADCR_DIFFEN_DIFFERENTIAL | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+            ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+                (ADC_ADCR_ADMD_SINGLE | ADC_ADCR_DIFFEN_DIFFERENTIAL | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+
             /* Enable analog input channel 2 for differential input channel pair 1 */
             ADC->ADCHER |= ((ADC->ADCHER & ~ADC_ADCHER_CHEN_Msk) | (1 << 2));
 
@@ -212,7 +216,7 @@ void ADC_IRQHandler(void)
 /*---------------------------------------------------------------------------------------------------------*/
 /* MAIN function                                                                                           */
 /*---------------------------------------------------------------------------------------------------------*/
-main(void)
+int32_t main(void)
 {
 
     /* Unlock protected registers */

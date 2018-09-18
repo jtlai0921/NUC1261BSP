@@ -127,7 +127,9 @@ void AdcResultMonitorTest()
     printf("\nIn this test, software will compare the conversion result of channel 2.\n");
 
     /* Set the ADC operation mode as continuous scan, input mode as single-end and enable the ADC converter */
-    ADC->ADCR = (ADC_ADCR_ADMD_CONTINUOUS | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_Msk);
+    ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+        (ADC_ADCR_ADMD_CONTINUOUS | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+
     /* Set the ADC channel 2 */
     ADC->ADCHER |= ((ADC->ADCHER & ~ADC_ADCHER_CHEN_Msk) | (1 << 2));
 
@@ -213,7 +215,7 @@ void ADC_IRQHandler(void)
 /*---------------------------------------------------------------------------------------------------------*/
 /* MAIN function                                                                                           */
 /*---------------------------------------------------------------------------------------------------------*/
-main(void)
+int32_t main(void)
 {
 
     /* Unlock protected registers */

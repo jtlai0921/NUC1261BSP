@@ -132,7 +132,9 @@ void AdcSingleCycleScanModeTest()
         if(u8Option == '1')
         {
             /* Set the ADC operation mode as single-cycle, input mode as single-end and enable the ADC converter  */
-            ADC->ADCR = (ADC_ADCR_ADMD_SINGLE_CYCLE | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+            ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+                (ADC_ADCR_ADMD_SINGLE_CYCLE | ADC_ADCR_DIFFEN_SINGLE_END | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+
             /* Enable analog input channel 0, 1, 2 and 3 */
             ADC->ADCHER = ((ADC->ADCHER & ~ADC_ADCHER_CHEN_Msk) | (0xF));
 
@@ -154,7 +156,9 @@ void AdcSingleCycleScanModeTest()
         else if(u8Option == '2')
         {
             /* Set the ADC operation mode as single-cycle, input mode as differential and enable the ADC converter */
-            ADC->ADCR = (ADC_ADCR_ADMD_SINGLE_CYCLE | ADC_ADCR_DIFFEN_DIFFERENTIAL | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+            ADC->ADCR = (ADC->ADCR & (~(ADC_ADCR_DIFFEN_Msk | ADC_ADCR_ADMD_Msk))) | \
+                (ADC_ADCR_ADMD_SINGLE_CYCLE | ADC_ADCR_DIFFEN_DIFFERENTIAL | ADC_ADCR_ADEN_CONVERTER_ENABLE);
+
             /* Enable analog input channel 0 and 2 */
             ADC->ADCHER = ((ADC->ADCHER & ~ADC_ADCHER_CHEN_Msk) | (0x5));
 
@@ -185,7 +189,7 @@ void AdcSingleCycleScanModeTest()
 /*---------------------------------------------------------------------------------------------------------*/
 /* MAIN function                                                                                           */
 /*---------------------------------------------------------------------------------------------------------*/
-main(void)
+int32_t main(void)
 {
 
     /* Unlock protected registers */

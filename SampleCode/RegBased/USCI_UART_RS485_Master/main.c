@@ -201,7 +201,7 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
 
     /* Set PA multi-function pins for UART0 RXD and TXD */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA2MFP_Msk | SYS_GPA_MFPL_PA2MFP_Msk);
+    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA3MFP_Msk | SYS_GPA_MFPL_PA2MFP_Msk);
     SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA3MFP_UART0_RXD | SYS_GPA_MFPL_PA2MFP_UART0_TXD);
 
     /* Set PC multi-function pins for USCI0_DAT0(PC.0), USCI0_DAT1(PC.1) and USCI0_CTL1(PC.2) */

@@ -124,7 +124,7 @@ void SYS_Init(void)
     SYS->GPD_MFPL |= SYS_GPD_MFPL_PD6MFP_ACMP0_O;
 
     /* Set PA multi-function pins for UART0 RXD and TXD */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA2MFP_Msk | SYS_GPA_MFPL_PA2MFP_Msk);
+    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA3MFP_Msk | SYS_GPA_MFPL_PA2MFP_Msk);
     SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA3MFP_UART0_RXD | SYS_GPA_MFPL_PA2MFP_UART0_TXD);
 
     /* Disable digital input path of analog pin ACMP0_P to prevent leakage */

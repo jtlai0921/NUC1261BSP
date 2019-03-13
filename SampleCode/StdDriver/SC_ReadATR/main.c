@@ -76,17 +76,17 @@ void SYS_Init(void)
     SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA3MFP_Msk | SYS_GPA_MFPL_PA2MFP_Msk);
     SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA3MFP_UART0_RXD | SYS_GPA_MFPL_PA2MFP_UART0_TXD);
 
-    /* Set PA.0 ~ PA.3 and PB.2 for SC0 interface */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA0MFP_Msk |
-                       SYS_GPA_MFPL_PA1MFP_Msk |
-                       SYS_GPA_MFPL_PA2MFP_Msk |
-                       SYS_GPA_MFPL_PA3MFP_Msk);
+    /* Set PC.0 ~ PC.3 and PB.2 for SC0 interface */
+    SYS->GPC_MFPL &= ~(SYS_GPC_MFPL_PC0MFP_Msk |
+                       SYS_GPC_MFPL_PC1MFP_Msk |
+                       SYS_GPC_MFPL_PC2MFP_Msk |
+                       SYS_GPC_MFPL_PC3MFP_Msk);
     SYS->GPB_MFPL &= ~SYS_GPB_MFPL_PB2MFP_Msk;
-    SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA0MFP_SC0_CLK |
-                      SYS_GPA_MFPL_PA1MFP_SC0_DAT |
-                      SYS_GPA_MFPL_PA2MFP_SC0_RST |
-                      SYS_GPA_MFPL_PA3MFP_SC0_PWR);
-    SYS->GPB_MFPL |= SYS_GPB_MFPL_PB2MFP_SC0_nCD;
+    SYS->GPC_MFPL |= (SC0_DAT_PC0 |
+                      SC0_CLK_PC1 |
+                      SC0_RST_PC2 |
+                      SC0_PWR_PC3);
+    SYS->GPB_MFPL |= SC0_nCD_PB2;
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -115,10 +115,10 @@ int main(void)
     printf("+-------------------------------------+\n");
     printf("# This sample code will get Smart Card ATR data via SC0 port.\n");
     printf("# I/O configuration:\n");
-    printf("    SC0CLK (PA.0) <--> smart card slot clock pin\n");
-    printf("    SC0DAT (PA.1) <--> smart card slot data pin\n");
-    printf("    SC0PWR (PA.3) <--> smart card slot power pin\n");
-    printf("    SC0RST (PA.2) <--> smart card slot reset pin\n");
+    printf("    SC0CLK (PC.1) <--> smart card slot clock pin\n");
+    printf("    SC0DAT (PC.0) <--> smart card slot data pin\n");
+    printf("    SC0PWR (PC.3) <--> smart card slot power pin\n");
+    printf("    SC0RST (PC.2) <--> smart card slot reset pin\n");
     printf("    SC0CD  (PB.2) <--> smart card slot card detect pin\n");
     printf("\nThis sample code reads ATR from smartcard...\n");
 

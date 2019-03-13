@@ -3,7 +3,7 @@
  * @version  V3.00
  * $Revision: 2 $
  * $Date: 16/10/25 4:28p $
- * @brief    Configure EBI interface to access BS616LV4017 (SRAM) on EBI interface.
+ * @brief    Configure EBI interface to access BS616LV4017 (SRAM) on EBI interface. (UART0 TXD on PD.1)
  * @note
  * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
@@ -103,9 +103,9 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
-    /* Set PA multi-function pins for UART0 RXD and TXD */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA3MFP_Msk | SYS_GPA_MFPL_PA2MFP_Msk);
-    SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA3MFP_UART0_RXD | SYS_GPA_MFPL_PA2MFP_UART0_TXD);
+    /* Set PD multi-function pins for UART0 RXD and TXD */
+    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD0MFP_Msk | SYS_GPD_MFPL_PD1MFP_Msk);
+    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD0MFP_UART0_RXD | SYS_GPD_MFPL_PD1MFP_UART0_TXD);
 }
 
 void UART0_Init(void)
@@ -140,6 +140,7 @@ int main(void)
     printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
     printf("+--------------------------------------------------------+\n");
     printf("|    EBI SRAM Sample Code on Bank0 with PDMA transfer    |\n");
+    printf("|    (UART0 TXD on PD.1)                                 |\n");
     printf("+--------------------------------------------------------+\n\n");
 
     printf("********************************************************************\n");

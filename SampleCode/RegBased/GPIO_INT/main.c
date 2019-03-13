@@ -117,7 +117,7 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
 
     /* Set PA multi-function pins for UART0 RXD and TXD */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA2MFP_Msk | SYS_GPA_MFPL_PA2MFP_Msk);
+    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA3MFP_Msk | SYS_GPA_MFPL_PA2MFP_Msk);
     SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA3MFP_UART0_RXD | SYS_GPA_MFPL_PA2MFP_UART0_TXD);
 
 }
@@ -163,7 +163,7 @@ int main(void)
     /*-----------------------------------------------------------------------------------------------------*/
     printf("PB.3 and PC.4 are used to test interrupt ......\n");
 
-    /* Configure PC.3 as Input mode and enable interrupt by rising edge trigger */
+    /* Configure PB.3 as Input mode and enable interrupt by rising edge trigger */
     PB->MODE = (PB->MODE & (~GPIO_MODE_MODE2_Msk)) | (GPIO_MODE_INPUT << GPIO_MODE_MODE3_Pos);
     PB->INTTYPE |= (GPIO_INTTYPE_EDGE << GPIO_INTTYPE_TYPE3_Pos);
     PB->INTEN |= GPIO_INTEN_RHIEN3_Msk;

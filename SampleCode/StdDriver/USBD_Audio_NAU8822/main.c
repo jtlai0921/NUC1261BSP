@@ -114,15 +114,13 @@ void SYS_Init(void)
     SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD5MFP_CLKO);
 
 
-    /* Set GPA2, GPA3 to be I2C */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA2MFP_Msk | SYS_GPA_MFPL_PA3MFP_Msk);
-    SYS->GPA_MFPL |= SYS_GPA_MFPL_PA2MFP_I2C0_SDA | SYS_GPA_MFPL_PA3MFP_I2C0_SCL;
+    /* Set GPE12, GPE13 to be I2C */
+    SYS->GPE_MFPH &= ~(SYS_GPE_MFPH_PE12MFP_Msk | SYS_GPE_MFPH_PE13MFP_Msk);
+    SYS->GPE_MFPH |= SYS_GPE_MFPH_PE12MFP_I2C0_SCL | SYS_GPE_MFPH_PE13MFP_I2C0_SDA;
 
     /* Set I2S interface */
     /* Configure PC.5 as I2S MCLK pin */
     SYS->GPC_MFPL = (SYS->GPC_MFPL & (~SYS_GPC_MFPL_PC5MFP_Msk)) | SYS_GPC_MFPL_PC5MFP_SPI0_I2SMCLK;
-
-//    SYS->GPC_MFPL = (SYS->GPC_MFPL & (~0x000FFF0F)) | 0x00022202; /* PC[4:2, 0] : SPI0_MISO0, SPI0_MOSI0, SPI0_SS, SPI0_CLK */
 
     SYS->GPB_MFPL = (SYS->GPB_MFPL & (~0x00FFFF00)) | 0x00222200; /* PB[5:2] : SPI0_MOSI0, SPI0_SS, SPI0_MISO0, SPI0_CLK */
     PB->SLEWCTL |= 0x3C;
@@ -171,11 +169,11 @@ int32_t main(void)
         The audio is input from NAU8822 AUXIN.
         The audio is output by NAU8822 Headphone output.
 
-        NAU8822 is connect with I2S(PB2~5) and controlled by I2C0(PA2, PA3).
+        NAU8822 is connect with I2S(PB2~5) and controlled by I2C0(PE12, PE13).
         NAU8822 clock source is also come from I2S (MCLK, PC5).
 
-            PA2 <-> I2S0_SDA
-            PA3 <-> I2S0_SCL
+            PE12 <-> I2S0_SCL
+            PE13 <-> I2S0_SDA
 
             PB2 <-> I2S0_BCLK
             PB3 <-> I2S0_ADC

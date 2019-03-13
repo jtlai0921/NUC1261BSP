@@ -48,7 +48,7 @@ int main(void)
 
     printf("\n\n");
     printf("+----------------------------------------------------------------------+\n");
-    printf("|                     SPI Master Mode Sample Code                      |\n");
+    printf("|                      SPI Master Mode Sample Code                     |\n");
     printf("+----------------------------------------------------------------------+\n");
     printf("\n");
     printf("Configure SPI0 as a master.\n");

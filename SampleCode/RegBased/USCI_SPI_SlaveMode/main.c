@@ -53,8 +53,8 @@ int main()
     printf("Configure USCI_SPI1 as a slave.\n");
     printf("Bit length of a transaction: 16\n");
     printf("The I/O connection for USCI_SPI1:\n");
-    printf("    USCI_SPI1_SS (PA.0)\n    USCI_SPI1_CLK (PA.3)\n");
-    printf("    USCI_SPI1_MISO (PB.1)\n    USCI_SPI1_MOSI (PB.0)\n\n");
+    printf("    USCI_SPI1_SS (PD.12)\n    USCI_SPI1_CLK (PD.15)\n");
+    printf("    USCI_SPI1_MISO (PD.13)\n    USCI_SPI1_MOSI (PD.14)\n\n");
     printf("USCI_SPI controller will transfer %d data to a off-chip master device.\n", TEST_COUNT);
     printf("In the meanwhile the USCI_SPI controller will receive %d data from the off-chip master device.\n", TEST_COUNT);
     printf("After the transfer is done, the %d received data will be printed out.\n", TEST_COUNT);
@@ -144,10 +144,8 @@ void SYS_Init(void)
     PD->MODE = (PD->MODE & 0xFFFFC3FF) | 0x00000400;
 
     /* Set USCI_SPI1 multi-function pins */
-    SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA0MFP_Msk | SYS_GPA_MFPL_PA3MFP_Msk);
-    SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA0MFP_USCI1_CTL0 | SYS_GPA_MFPL_PA3MFP_USCI1_CLK);
-    SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk);
-    SYS->GPB_MFPL |= (SYS_GPB_MFPL_PB0MFP_USCI1_DAT0 | SYS_GPB_MFPL_PB1MFP_USCI1_DAT1);
+    SYS->GPD_MFPH &= ~(SYS_GPD_MFPH_PD12MFP_Msk | SYS_GPD_MFPH_PD13MFP_Msk | SYS_GPD_MFPH_PD14MFP_Msk | SYS_GPD_MFPH_PD15MFP_Msk);
+    SYS->GPD_MFPH |= (SYS_GPD_MFPH_PD12MFP_USCI1_CTL0 | SYS_GPD_MFPH_PD13MFP_USCI1_DAT1 | SYS_GPD_MFPH_PD14MFP_USCI1_DAT0 | SYS_GPD_MFPH_PD15MFP_USCI1_CLK);
 
     /* Set PC0,2,3 as output mode and PC1 as Input mode */
     PC->MODE = (PC->MODE & 0xFFFFFF00) | 0x00000051;

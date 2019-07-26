@@ -10,6 +10,7 @@
 #include  "NUC1261.h"
 #include  "micro_printer_and_hid_transfer.h"
 
+uint32_t volatile g_u32OutToggle = 0;
 
 /*--------------------------------------------------------------------------*/
 void USBD_IRQHandler(void)
@@ -53,6 +54,7 @@ void USBD_IRQHandler(void)
             /* Bus reset */
             USBD_ENABLE_USB();
             USBD_SwReset();
+            g_u32OutToggle = 0;
         }
         if(u32State & USBD_STATE_SUSPEND)
         {
@@ -112,8 +114,16 @@ void USBD_IRQHandler(void)
         {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP3);
-            // Bulk Out -> receive printer data
-            PTR_Data_Receive();
+            if(g_u32OutToggle == (USBD->EPSTS & USBD_EPSTS_EPSTS3_Msk))
+            {
+                USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
+            }
+            else
+            {
+                // Bulk Out -> receive printer data
+                PTR_Data_Receive();
+                g_u32OutToggle = USBD->EPSTS & USBD_EPSTS_EPSTS3_Msk;
+            }
         }
 
         if(u32IntSts & USBD_INTSTS_EP4)
@@ -308,7 +318,7 @@ void PTR_Data_Receive(void)
 #define SECTOR_SIZE      4096
 #define START_SECTOR     0x10
 
-typedef __packed struct
+typedef struct
 {
     uint8_t u8Cmd;
     uint8_t u8Size;
@@ -316,7 +326,7 @@ typedef __packed struct
     uint32_t u32Arg2;
     uint32_t u32Signature;
     uint32_t u32Checksum;
-} CMD_T;
+} __attribute__((packed)) CMD_T;
 
 CMD_T gCmd;
 
@@ -535,7 +545,7 @@ void HID_GetOutReport(uint8_t *pu8EpBuf, uint32_t u32Size)
     else
     {
         /* Check and process the command packet */
-        if(ProcessCommand(pu8EpBuf, u32Size))
+        if(ProcessCommand(pu8EpBuf, sizeof(gCmd)))
         {
             printf("Unknown HID command!\n");
         }

@@ -309,7 +309,7 @@ void HID_ClassRequest(void)
 #define SECTOR_SIZE      4096
 #define START_SECTOR     0x10
 
-typedef __packed struct
+typedef struct
 {
     uint8_t u8Cmd;
     uint8_t u8Size;
@@ -317,7 +317,7 @@ typedef __packed struct
     uint32_t u32Arg2;
     uint32_t u32Signature;
     uint32_t u32Checksum;
-} CMD_T;
+} __attribute__((packed)) CMD_T;
 
 CMD_T gCmd;
 
@@ -538,7 +538,7 @@ void HID_GetOutReport(uint8_t *pu8EpBuf, uint32_t u32Size)
     else
     {
         /* Check and process the command packet */
-        if(ProcessCommand(pu8EpBuf, u32Size))
+        if(ProcessCommand(pu8EpBuf, sizeof(gCmd)))
         {
             printf("Unknown HID command!\n");
         }
